@@ -1,7 +1,7 @@
 
 
 SHOW TABLES
-SELECT*FROM paciente
+SELECT*FROM consulta
 
  CREATE TABLE recepcionista(
  idRecepcionista INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -89,8 +89,38 @@ VALUES
 (8,'Minnie','61904674070','16973297121','1999-01-20','EsposaMickey@gmail.com','Rua Alice Macuco Alves','34','Casa','São paulo','05453010',NULL,'SP');
 
 
-INSERT INTO recepcionista(nomeRecepcionista,login,senha,celular,cpf)
-('Chico
+INSERT INTO recepcionista(nomeRecepcionista,loginRecepcionsita,senha,celular,cpf)
+VALUES('Chico Bento','chicobento.senaclin','123456','13994964352','74468816074'),
+('Franjinho','franjinha.senaclin','654321','18996236139','53875476000'),
+('Cebolinha','cebolhina.senaclin','56321','15996448866','73247097023');
+
+INSERT INTO especialidade(nomeEspecialidade)
+VALUES
+('Cardiologista'),
+('Otorrinolaringologista'),
+('Clínico Geral'),
+('Gastroenterologista'),
+('Ortopedista');
+
+INSERT INTO medico
+VALUES 
+(1, 1,'Pardal','765544SP','pardal_med.senaclin','12345'),
+(2, 5,'Monica','768880SP','monica_med.senaclin','123456'),
+(3, 3,'Zé Carioca','165544RJ','zeca_med.senaclin','65432'),
+(4, 4,'Magali','265544SP','magali_med.senaclin','654321'),
+(5, 2,'Horácio','365544MG','horacio_med.senaclin','546321');
 
 
+INSERT INTO consulta(idPaciente,idMedico,idRecepcionista,dataHoraConsulta,sintomas,prescricao)
+VALUES(1,1,1,'2024-06-22 16:00','Dores no Peito',NULL),
+(2,2,1,'2024-06-22 11:00','Dores no Pé',NULL),
+(3,3,1,'2024-06-22 15:00','Dor na cabeça',NULL),
+(7,4,2,'2024-06-23 11:00','Dor de barriga',NULL),
+(8,5,2,'2024-06-23 14:00','Dores no ouvido',NULL);
+
+INSERT INTO consulta(idConsulta,idPaciente,idMedico,idRecepcionista,dataHoraConsulta,sintomas,prescricao)
+VALUES(6,3,1,1,'2024-06-26 17:00','Dores no Peito',NULL),
+(7,3,2,1,'2024-06-26 11:00','Dores nos Pés',NULL);
+
+ 
  
