@@ -239,6 +239,26 @@ FROM paciente p
 JOIN consulta c ON p.idPaciente = c.idPaciente
 WHERE p.cidade = 'Santos';
 
+/*5- Buscar todos os pacientes que tenham com a letra "P" no nome. */
+ 
+SELECT *
+FROM paciente
+WHERE nome LIKE '%P%';
+ 
+/*6- Buscar o nome do médico, a data da consulta, o nome do paciente e a especialidade do médico de todas as consultas de determinado dia (escolhido por você), em ordem alfabética.*/
+ 
+SELECT m.nome AS nome_medico, c.dataHoraConsulta, p.nome AS nome_paciente, e.nomeEspecialidade AS especialidade
+FROM consulta c
+JOIN medico m 
+ON c.idMedico = m.idMedico
+JOIN paciente p 
+ON c.idPaciente = p.idPaciente
+JOIN especialidade e 
+ON m.IdEspecialidade = e.idEspecialidade
+WHERE DATE(c.dataHoraConsulta) = '2024-06-22'
+ORDER BY m.nome;
+
+
 
 
  
