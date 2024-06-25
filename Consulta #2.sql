@@ -328,4 +328,18 @@ JOIN medico m ON c.idMedico = m.idMedico
 JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
 ORDER BY c.dataHoraConsulta DESC;
  
+ /*Desafio - É possível realizar? Justifique:*/
+/*Sim, é possível realizar essa consulta. Ela envolve múltiplas junções (joins) entre várias tabelas (consulta, recepcionista, paciente, medico e especialidade), onde os relacionamentos são bem definidos através de chaves estrangeiras. A ordenação é feita de forma decrescente pela coluna dataHoraConsulta.*/
  
+/*Relatório a) - Quantas consultas cada médico realizou na clínica:*/
+SELECT m.nome AS nome_medico, COUNT(c.idConsulta) AS num_consultas
+FROM medico m
+LEFT JOIN consulta c ON m.idMedico = c.idMedico
+GROUP BY m.nome;
+ 
+/*Relatório b) - Quantas consultas foram realizadas por especialidade:*/
+SELECT e.nomeEspecialidade AS especialidade_medico, COUNT(c.idConsulta) AS num_consultas
+FROM consulta c
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+GROUP BY e.nomeEspecialidade;
