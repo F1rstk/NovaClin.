@@ -258,7 +258,42 @@ ON m.IdEspecialidade = e.idEspecialidade
 WHERE DATE(c.dataHoraConsulta) = '2024-06-22'
 ORDER BY m.nome;
 
-
+/*7- Buscar o nome dos médicos e sua especialidade, apenas dos médicos com CRM de SP.*/
+ 
+SELECT m.nome AS nome_medico, e.nomeEspecialidade AS especialidade
+FROM medico m
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+WHERE m.crm LIKE '%SP%';
+ 
+ 
+/*8- Buscar a data da consulta que está mais longe na clínica. */
+ 
+SELECT MAX(dataHoraConsulta) AS data_mais_longe
+FROM consulta;
+ 
+/*9- Buscar quantos médicos a clínica possui por especialidade.*/
+ 
+SELECT e.nomeEspecialidade AS especialidade, COUNT(*) AS num_medicos
+FROM medico m
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+GROUP BY e.nomeEspecialidade;
+ 
+ 
+/*10- Buscar o nome, celular e email de todos os pacientes que começam com a letra “D” em ordem alfabética.*/
+ 
+SELECT nome, cel, email
+FROM paciente
+WHERE nome LIKE 'D%'
+ORDER BY nome;
+ 
+/*11- Buscar todos os exames, bem como quem foi o médico que solicitou e a data do exame, em ordem cronológica (por data). */
+ 
+SELECT nomeExame, m.nome AS medico_solicitante,dataHoraExame
+FROM exame ex
+JOIN consulta c ON ex.idConsulta = c.idConsulta
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+ORDER BY ex.dataHoraExame;
 
 
  
