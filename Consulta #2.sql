@@ -208,6 +208,24 @@ WHERE logradouro LIKE '%casa%'
 ORDER BY nome;
 
 
+/*1.Buscar nome do médico, nome da especialidade, e crm de todos os médicos cuja especialidade
+seja “Cardiologista”.*/
+
+SELECT nome, nomeEspecialidade, crm
+FROM medico
+INNER JOIN especialidade ON especialidade.idEspecialidade = medico.IdEspecialidade
+WHERE nomeEspecialidade LIKE '%Cardiologista%';
+
+/*2.Buscar quantos pacientes a clínica possui por cidade.*/
+
+SELECT cidade, COUNT(*) AS num_pacientes
+FROM paciente
+GROUP BY cidade;
+
+/*3.Buscar a data de todas as consultas, nome do médico e o nome do paciente, em ordem
+cronológica. */
+
+
 
  
  
