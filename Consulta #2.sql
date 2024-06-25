@@ -295,6 +295,37 @@ JOIN medico m ON c.idMedico = m.idMedico
 JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
 ORDER BY ex.dataHoraExame;
 
-
+/*12- Buscar o nome do médico, o crm e a data da consulta, de todos os médicos, ainda que não possuam consultas.*/
+ 
+SELECT m.nome AS nome_medico, m.crm, c.dataHoraConsulta
+FROM medico m
+LEFT JOIN consulta c ON m.idMedico = c.idMedico
+ORDER BY m.nome;
+ 
+/*13-Buscar o nome de todos os pacientes, celular, email e data da consulta em ordem alfabética. Trazer os pacientes ainda que não possuam consultas.*/
+ 
+SELECT p.nome, p.cel, p.email, c.dataHoraConsulta
+FROM paciente p
+LEFT JOIN consulta c ON p.idPaciente = c.idPaciente
+ORDER BY p.nome;
+ 
+/*14- Buscar o nome de todos os pacientes, logradouro, número e complemento apenas dos moradores que moram em São Paulo, em ordem alfabética.*/
+ 
+SELECT nome, logradouro, numero, complemento
+FROM paciente
+WHERE cidade = 'São Paulo'
+ORDER BY nome;
+ 
+/*15- Buscar a data de todas as consultas, o nome do recepcionista que marcou, o nome do
+paciente, o nome do médico, a especialidade do médico e o celular do paciente em ordem
+cronológica invertida.*/
+ 
+SELECT c.dataHoraConsulta, nomeRecepcionista AS nome_recepcionista, p.nome AS nome_paciente, m.nome AS nome_medico, e.nomeEspecialidade AS especialidade_medico, p.cel AS celular_paciente
+FROM consulta c
+JOIN recepcionista rec ON c.idRecepcionista = rec.idRecepcionista
+JOIN paciente p ON c.idPaciente = p.idPaciente
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+ORDER BY c.dataHoraConsulta DESC;
  
  
