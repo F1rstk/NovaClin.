@@ -225,6 +225,20 @@ GROUP BY cidade;
 /*3.Buscar a data de todas as consultas, nome do médico e o nome do paciente, em ordem
 cronológica. */
 
+ 
+SELECT c.dataHoraConsulta, m.nome AS nome_medico, p.nome AS nome_paciente
+FROM consulta c
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN paciente p ON c.idPaciente = p.idPaciente
+ORDER BY c.dataHoraConsulta;
+ 
+/*4- Buscar o nome do paciente, celular, email, e a data da consulta de todos os pacientes com consulta marcada, desde que vivam em Santos.*/
+ 
+SELECT p.nome, p.cel, p.email, c.dataHoraConsulta
+FROM paciente p
+JOIN consulta c ON p.idPaciente = c.idPaciente
+WHERE p.cidade = 'Santos';
+
 
 
  
