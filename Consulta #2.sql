@@ -378,6 +378,54 @@ CREATE PROCEDURE sp_MedicoEspecialidade(IN nomeEspecialidade VARCHAR(30))
 
 CALL sp_MedicoEspecialidade('Cardiologista');
 
-/*
+/*4-Criar uma procedure para resetar todas as senhas dos médicos para DOCTOR e 
+executá-la*/
+CREATE PROCEDURE sp_senhaMedico()
+    UPDATE medico
+    SET senha = 'DOCTOR';
+
+CALL sp_senhaMedico();
+
+SELECT*FROM medico
+
+/*5- Criar uma procedure para alterar as informações de paciente.*/
+CREATE PROCEDURE pu_PacienteAlterar(
+    IN p_nome VARCHAR(50),
+    IN p_logradouro VARCHAR(30),
+    IN p_numero VARCHAR(6),
+    IN p_complemento VARCHAR(10),
+    IN p_cidade VARCHAR(20),
+    IN p_cpf CHAR(11)
+)
+ 
+    UPDATE paciente
+    SET logradouro = p_logradouro,
+        numero = p_numero,
+        complemento = p_complemento,
+        cidade = p_cidade
+    WHERE cpf = p_cpf AND nome = p_nome;
+    
+    CALL pu_PacienteAlterar('Minie', 'nova rua', '456', 'ap10', 'São Paulo', '00998877665');
 
 
+SELECT*FROM paciente
+
+/*6-Criar uma procedure para inserir uma consulta na clínica.*/
+CREATE PROCEDURE pi_Consulta(
+    IN
+	  p_idPaciente INT,
+    p_idRecepcionista INT,
+    p_idMedico INT,
+     p_dataHoraConsulta DATETIME,
+     p_sintomas VARCHAR(200),
+     p_prescricao VARCHAR(200))
+     
+       INSERT INTO consulta (idPaciente, idRecepcionista, idMedico, dataHoraConsulta, sintomas, prescricao)
+    VALUES (p_idPaciente, p_idRecepcionista, p_idMedico, p_dataHoraConsulta, p_sintomas, p_prescricao);
+    
+    CALL pi_Consulta (3, 1, 1, '2024-06-30 15:00:00', 'Dor no peito',NULL)
+    
+    SELECT*FROM consulta
+    
+    
+    
