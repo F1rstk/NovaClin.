@@ -343,3 +343,41 @@ FROM consulta c
 JOIN medico m ON c.idMedico = m.idMedico
 JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
 GROUP BY e.nomeEspecialidade;
+
+
+/*1- Criar uma view que traga nome e contatos (telefones e pacientes) em ordem alfabética 
+e executá-la.*/
+CREATE VIEW vw_contatos
+AS
+SELECT p.nome, p.cel
+FROM paciente p
+LEFT JOIN consulta c ON p.idPaciente = c.idPaciente
+ORDER BY p.nome;
+
+SELECT*FROM vw_contatos
+
+/*2- Criar uma view que traga a quantidade de consultas agrupadas por especialidade e 
+executá-la*/
+CREATE VIEW vw_consultas_especialidade AS
+SELECT e.nomeEspecialidade AS Especialidade, COUNT(c.idConsulta) AS QuantidadeConsultas
+FROM consulta c
+JOIN medico m ON c.idMedico = m.idMedico
+JOIN especialidade e ON m.idEspecialidade = e.idEspecialidade
+GROUP BY e.nomeEspecialidade;
+
+SELECT*FROM vw_consultas_especialidade
+
+/*3-Criar uma procedure que permita saber quantos médicos possuímos por especialidade. 
+A procedure deverá exibir a quantidade de médico de acordo com o nome da 
+especialidade informada. Executar a procedure.*/
+CREATE PROCEDURE sp_MedicoEspecialidade(IN nomeEspecialidade VARCHAR(30))
+    SELECT COUNT(*) AS quantidade_medicos
+    FROM medico m
+    JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+    WHERE e.nomeEspecialidade = nomeEspecialidade; 
+
+CALL sp_MedicoEspecialidade('Cardiologista');
+
+/*
+
+
