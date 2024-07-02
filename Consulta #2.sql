@@ -427,5 +427,73 @@ CREATE PROCEDURE pi_Consulta(
     
     SELECT*FROM consulta
     
+    /*7- Criar uma procedure para excluir um exame do sistema. (Obs - Sabemos que na prática 
+deveremos utilizar a exclusão lógica).*/
+CREATE PROCEDURE pd_ExcluirExame(
+    IN p_idExame INT
+)
+    DELETE FROM exame
+    WHERE idExame = p_idExame;
+    
+    CALL pd_ExcluirExame(2); /*Exame Deleto id 2*/
+    
+    SELECT*FROM exame
     
     
+    /*8- Criar uma procedure que liste a data da consulta e o nome do paciente de acordo com 
+o nome do médico. Aqui, listaremos a agenda do médico. Execute a procedure.*/
+CREATE PROCEDURE ps_MedicoAgenda(
+    IN p_nomeMedico VARCHAR(50)
+)
+ 
+    SELECT c.dataHoraConsulta, p.nome AS nome_paciente
+    FROM consulta c
+    JOIN medico m ON c.idMedico = m.idMedico
+    JOIN paciente p ON c.idPaciente = p.idPaciente
+    WHERE m.nome = p_nomeMedico
+    ORDER BY c.dataHoraConsulta;
+   
+    CALL ps_MedicoAgenda('Pardal');
+    SELECT*FROM medico
+    
+    /*9- Criar um mecanismo para trazer a quantidade de médicos que a clínica possui por 
+especialidade. Execute o mecanismo.*/
+CREATE PROCEDURE ps_MedicoEspecialidade()
+    SELECT e.nomeEspecialidade AS especialidade, COUNT(*) AS quantidade_medicos
+    FROM medico m
+    JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+    GROUP BY e.nomeEspecialidade;
+    
+    CALL ps_MedicoEspecialidade();
+    
+    /*10- Criar uma procedure que liste a data da consulta, o celular do paciente e a 
+especialidade da consulta de acordo com o nome do paciente informado, mas em 
+ordem cronológica. Neste caso estaremos verificando todas as consultas do paciente.*/
+CREATE PROCEDURE ps_pacienteEspecialidadeConsulta(
+    IN p_nomePaciente VARCHAR(50)
+)
+    SELECT c.dataHoraConsulta, p.cel AS celular_paciente, e.nomeEspecialidade AS especialidade
+    FROM consulta c
+    JOIN medico m ON c.idMedico = m.idMedico
+    JOIN paciente p ON c.idPaciente = p.idPaciente
+    JOIN especialidade e ON m.IdEspecialidade = e.idEspecialidade
+    WHERE p.nome = p_nomePaciente
+    ORDER BY c.dataHoraConsulta;
+    
+    CALL ps_pacienteEspecialidadeConsulta('Minnie');
+    
+    SELECT*FROM paciente
+    
+    /*DESAFIO: Criar uma procedure que sirva para atualizar a data de uma consulta. A procedure 
+deve receber ID da consulta e a data e hora para a qual queremos trocar*/
+CREATE PROCEDURE pu_AlterarConsulta(
+    IN p_idConsulta INT,
+    IN p_newDateTime DATETIME
+)
+    UPDATE consulta
+    SET dataHoraConsulta = p_newDateTime
+    WHERE idConsulta = p_idConsulta;
+    
+    CALL pu_alterarConsulta (8, '2024-06-25 12:00:00'); /*Alterando a data do idConsulta 8 */
+ 
+SELECT*FROM consulta
